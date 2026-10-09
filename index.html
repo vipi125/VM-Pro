@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VM Pro — Manual Clínico & Decisão em Ventilação Mecânica</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Mobile Bar -->
+  <header class="mobile-header">
+    <div style="display:flex; align-items:center; gap:0.5rem; font-weight: 700; font-size: 1rem;">
+      <span>🫁</span> <span>VM Pro UTI</span>
+    </div>
+    <button class="btn-mobile-toggle" onclick="toggleSidebar()">Menu</button>
+  </header>
+
+  <!-- Navigation Sidebar -->
+  <aside id="sidebar">
+    <div class="brand-header">
+      <div class="brand-icon">🫁</div>
+      <div>
+        <div class="brand-title">VM Pro</div>
+        <div class="brand-sub">Manual Prático de Cabeceira & UTI</div>
+      </div>
+    </div>
+    
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <span class="search-icon-inside">🔍</span>
+        <input type="text" id="filterNav" class="search-input" placeholder="Buscar no guia ou cálculo..." onkeyup="filterContent()">
+      </div>
+    </div>
+
+    <ul class="nav-list">
+      <li class="nav-category">Ação Imediata</li>
+      <li class="nav-item">
+        <a href="#plantao" class="nav-link">
+          <span class="nav-badge danger">🚨</span> Plantão & Troubleshooting
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#calculadoras" class="nav-link">
+          <span class="nav-badge accent">🧮</span> Calculadoras de Cabeceira
+        </a>
+      </li>
+
+      <li class="nav-category">Manual Completo Revisado</li>
+      <li class="nav-item">
+        <a href="#mod1" class="nav-link active">
+          <span class="nav-badge">01</span> Circuito & Fisiologia Básica
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#mod2" class="nav-link">
+          <span class="nav-badge">02</span> Mecânica, As 8 Pressões & Fenótipos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#mod3" class="nav-link">
+          <span class="nav-badge">03</span> Relação V/Q, CO₂ & Modo VCV
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#mod4" class="nav-link">
+          <span class="nav-badge">04</span> Modo PSV, Ciclagem & Assincronias
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#mod5" class="nav-link">
+          <span class="nav-badge">05</span> Cálculos de Mecânica & ΔPP
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- Workspace Content -->
+  <main id="main-content">
+
+    <!-- Hero Banner -->
+    <div class="hero-banner">
+      <div>
+        <div class="hero-banner-title">Sistema de Apoio Clínico à Ventilação Mecânica</div>
+        <div class="hero-banner-desc">Referência médica de cabeceira para UTI, Pronto-Socorro e Provas de Título. Fórmulas protetoras, fisiopatologia e troubleshooting em tempo real.</div>
+      </div>
+      <div class="quick-action-pills">
+        <a href="#plantao" class="pill-btn emergency">🚨 Plantão Imediato</a>
+        <a href="#calculadoras" class="pill-btn">🧮 Calculadoras</a>
+        <a href="#calc-pbw" class="pill-btn">⚖️ Peso Predito (PBW)</a>
+        <a href="#calc-mech-all" class="pill-btn">📊 Mecânica Completa</a>
+      </div>
+    </div>
+
+    <!-- ==================== PLANTÃO & TROUBLESHOOTING ==================== -->
+    <section id="plantao" class="module-section">
+      <h2 class="section-title">🚨 Plantão & Emergências: Troubleshooting Beira-Leito</h2>
+      <p class="section-desc">Condutas diagnósticas e terapêuticas rápidas para as três maiores crises de cabeceira na UTI e Emergência.</p>
+
+      <!-- Crise 1: Pressão de Pico Elevada -->
+      <div class="card">
+        <div class="card-header" style="color: #fca5a5;">
+          <span>1. Alarme de Pressão de Pico Elevada (Ppico ↑)</span>
+          <span class="nav-badge danger">Protocolo Diagnóstico</span>
+        </div>
+        <p><strong>Ação Imediata:</strong> Realize uma <strong>Pausa Inspiratória</strong> estática no ventilador para identificar a <strong>Pressão de Platô (Pplat)</strong>.</p>
+        
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Cenário Pressórico</th>
+                <th>Fisiopatologia Subjacente</th>
+                <th>Causas Mais Frequentes</th>
+                <th>Conduta Imediata</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ppico Alta com Platô Normal</strong><br><small style="color:#86efac;">Presistiva (Ppico - Pplat) > 4 cmH₂O</small></td>
+                <td><strong>Aumento puro de Resistência de Vias Aéreas</strong> (o parênquima pulmonar está complacente).</td>
+                <td>
+                  • Broncoespasmo agudo (sibilância)<br>
+                  • Rolha ou acúmulo de secreção no tubo<br>
+                  • Tubo acotovelado ou mordido pelo paciente<br>
+                  • Filtro HME/HMEF condensado ou obstruído
+                </td>
+                <td>
+                  1. Aspirar a cânula traqueal.<br>
+                  2. Administrar broncodilatador inalatório se sibilância.<br>
+                  3. Verificar posicionamento do tubo e morderia (passar cânula de Guedel se mordendo).<br>
+                  4. Desconectar temporariamente o filtro para testar.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Ppico Alta com Platô Elevado</strong><br><small style="color:#fca5a5;">Pplat > 30 cmH₂O e ΔP > 14 cmH₂O</small></td>
+                <td><strong>Queda abrupta de Complacência</strong> (o parênquima pulmonar ou a parede torácica/abdome estão rígidos).</td>
+                <td>
+                  • <strong>Pneumotórax Hipertensivo</strong> (emergência vital!)<br>
+                  • Intubação seletiva (geralmente brônquio fonte direito)<br>
+                  • Atelectasia pulmonar maciça<br>
+                  • Edema Agudo de Pulmão (EAP) / Piora da SARA<br>
+                  • Hipertensão intra-abdominal grave / Ascite
+                </td>
+                <td>
+                  1. <strong>Auscultar imediatamente:</strong> se murmúrio ausente unilateral com instabilidade, puncionar e drenar tórax!<br>
+                  2. Checar fixação do tubo na rima (recuar se seletivo).<br>
+                  3. Avaliar Rx de tórax ou USG Point-of-Care (POCUS).<br>
+                  4. Reduzir volume corrente para manter Pplat ≤ 30.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Crise 2: Hipotensão Pós-Intubação -->
+      <div class="card">
+        <div class="card-header" style="color: #fca5a5;">
+          <span>2. Hipotensão e Colapso Hemodinâmico Pós-Intubação Imediata</span>
+          <span class="nav-badge danger">Emergência Choque</span>
+        </div>
+        <p>A transição de pressão negativa intratorácica para pressão positiva reduz brutalmente o retorno venoso e o débito cardíaco. As 3 causas capitais a investigar:</p>
+        <ol>
+          <li>
+            <strong>Efeito Farmacológico das Drogas de Indução:</strong>
+            <p>Propofol, fentanil e midazolam causam vasodilatação venosa e depressão miocárdica em pacientes frequentemente hipovolêmicos.<br>
+            <em>Conduta:</em> Iniciar precocemente vasopressor (Noradrenalina em bomba ou bolus de resgate periférico) e ressuscitação volêmica guiada se indicado.</p>
+          </li>
+          <li>
+            <strong>Auto-PEEP e Hiperinsuflação Dinâmica Severa (Especialmente Asma / DPOC):</strong>
+            <p>O ar aprisionado eleva a pressão intratorácica a níveis extremos, colabando a veia cava inferior e causando choque obstrutivo mimics tamponamento cardíaco.<br>
+            <div class="callout callout-danger">
+              <strong>Manobra Salvadora de Cabeceira:</strong> <strong>DESCONECTE IMEDIATAMENTE O CIRCUITO DO TUBO</strong> e permita 15 a 30 segundos de apnéia com compressão torácica manual passiva para desinsuflar os pulmões. Se a pressão arterial subir de imediato, confirma-se choque por Auto-PEEP. Ajuste imediatamente: reduza a FR (ex.: 10 a 12 rpm) e aumente o fluxo inspiratório para conceder tempo expiratório prolongado!
+            </div>
+            </p>
+          </li>
+          <li>
+            <strong>Pneumotórax Hipertensivo por Barotrauma na Insuflação Inicial:</strong>
+            <p><em>Conduta:</em> Descompressão torácica por agulha (2º espaço intercostal linha hemiclavicular ou 4º/5º espaço linha axilar média) seguida de toracostomia com dreno em selo d'água.</p>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Crise 3: Assincronias Graves -->
+      <div class="card">
+        <div class="card-header" style="color: #fcd34d;">
+          <span>3. Manejo Imediato de Assincronias Ventilatórias</span>
+          <span class="nav-badge warning">Sincronia Paciente-Máquina</span>
+        </div>
+        <ul>
+          <li>
+            <strong>Duplo Disparo (Breath Stacking):</strong> O paciente dispara dois ciclos em sequência sem expirar entre eles, duplicando o volume corrente alveolar e gerando VILI severo.<br>
+            <em>Causa:</em> Tempo inspiratório mecânico muito curto para a alta demanda neural do paciente, ou volume insuficiente.<br>
+            <em>Conduta:</em> Em VCV, aumentar o fluxo ou o volume se tolerado; em PCV, aumentar o tempo inspiratório; em PSV, diminuir a porcentagem de ciclagem (% Esens para 10-15%) para prolongar a fase inspiratória.
+          </li>
+          <li>
+            <strong>Autodisparo:</strong> O ventilador cicla repetidamente sem nenhum esforço do paciente.<br>
+            <em>Causa:</em> Sensibilidade do gatilho excessivamente leve, condensação de água balançando no circuito corrugado, ou vazamento volumoso no balonete (cuff).<br>
+            <em>Conduta:</em> Drenar água das traqueias, checar pressão do balonete (20 a 30 cmH₂O) e aumentar o limiar de disparo (ex.: de 1 para 2–3 L/min).
+          </li>
+          <li>
+            <strong>Disparo Ineficaz:</strong> O paciente contrai o diafragma vigorosamente, mas a máquina não inicia a inspiração.<br>
+            <em>Causa:</em> Quase sempre causada por Auto-PEEP severa (o esforço muscular precisa vencer a pressão intrínseca antes de negativar o circuito).<br>
+            <em>Conduta:</em> Aumentar o tempo expiratório (reduzir FR), tratar o broncoespasmo. Em pacientes com limitação ao fluxo expiratório, titular PEEP extrínseca a cerca de 70% a 80% da Auto-PEEP para "calçar" a via aérea e reduzir o esforço de disparo.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== CALCULADORAS ==================== -->
+    <section id="calculadoras" class="module-section">
+      <h2 class="section-title">🧮 Calculadoras Clínicas de Cabeceira</h2>
+      <p class="section-desc">Ferramentas quantitativas com parametrização protetora e validação dinâmica para a rotina de UTI e emergência.</p>
+
+      <div class="calc-grid">
+        <!-- Calc 1: PBW -->
+        <div class="calc-item" id="calc-pbw">
+          <div>
+            <div class="card-header">1. Peso Predito (PBW) & Volume Protetor</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Fórmulas de Devine / ARDSNet para evitar baro e volutrauma.</p>
+            <div class="form-group">
+              <label>Sexo Biológico</label>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="pbw-sex" value="male" checked> Masculino</label>
+                <label class="radio-label"><input type="radio" name="pbw-sex" value="female"> Feminino</label>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Altura do Paciente (em centímetros)</label>
+              <input type="number" id="pbw-height" class="form-input" placeholder="Ex: 175" value="175">
+            </div>
+          </div>
+          <div>
+            <button class="btn-calc" onclick="calcPBW()">Calcular Peso & Volumes</button>
+            <div id="pbw-result" class="result-badge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Calc 2: Mecânica All-In-One -->
+        <div class="calc-item full-width" id="calc-mech-all">
+          <div>
+            <div class="card-header">2. Mecânica Ventilatória Completa (One-Stop Shop)</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">
+              Calcula <strong>Driving Pressure (ΔP)</strong>, <strong>Complacência Estática (Cest)</strong>, <strong>Resistência de Vias Aéreas (Rva)</strong> e <strong>Pressão Resistiva</strong> em uma única análise com alertas integrados. Requer paciente passivo, fluxo constante (onda quadrada) e pausas oclusivas.
+            </p>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.85rem;">
+              <div class="form-group">
+                <label>Volume Corrente (VT em mL)</label>
+                <input type="number" id="all-vt" class="form-input" placeholder="Ex: 420" value="420">
+              </div>
+              <div class="form-group">
+                <label>Pressão de Pico (Ppico cmH₂O)</label>
+                <input type="number" id="all-ppico" class="form-input" placeholder="Ex: 28" value="28">
+              </div>
+              <div class="form-group">
+                <label>Pressão de Platô (Pplat cmH₂O)</label>
+                <input type="number" id="all-pplat" class="form-input" placeholder="Ex: 20" value="20">
+              </div>
+              <div class="form-group">
+                <label>PEEP Total (cmH₂O)</label>
+                <input type="number" id="all-peep" class="form-input" placeholder="Ex: 8" value="8">
+              </div>
+              <div class="form-group">
+                <label>Fluxo Constante (L/min)</label>
+                <input type="number" id="all-flow" class="form-input" placeholder="Ex: 60" value="60">
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="btn-calc" onclick="calcMechanicsAll()">Processar Mecânica Ventilatória</button>
+            <div id="all-mech-result" class="result-badge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Calc 3: Driving Pressure Rápida -->
+        <div class="calc-item">
+          <div>
+            <div class="card-header">3. Driving Pressure Rápida (ΔP)</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Avaliação do estresse de cisalhamento alveolar (Pplat - PEEPtot).</p>
+            <div class="form-group">
+              <label>Pressão de Platô (Pplat cmH₂O)</label>
+              <input type="number" id="dp-pplat" class="form-input" placeholder="Ex: 22" value="22">
+            </div>
+            <div class="form-group">
+              <label>PEEP Total (cmH₂O)</label>
+              <input type="number" id="dp-peeptot" class="form-input" placeholder="Ex: 10" value="10">
+            </div>
+          </div>
+          <div>
+            <button class="btn-calc" onclick="calcDrivingPressure()">Calcular ΔP</button>
+            <div id="dp-result" class="result-badge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Calc 4: Cest Rápida -->
+        <div class="calc-item">
+          <div>
+            <div class="card-header">4. Complacência Estática (Cest)</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Distensibilidade do sistema respiratório (VT / ΔP).</p>
+            <div class="form-group">
+              <label>Volume Corrente (VT em mL)</label>
+              <input type="number" id="cest-vt" class="form-input" placeholder="Ex: 400" value="400">
+            </div>
+            <div class="form-group">
+              <label>Driving Pressure (ΔP cmH₂O)</label>
+              <input type="number" id="cest-dp" class="form-input" placeholder="Ex: 12" value="12">
+            </div>
+          </div>
+          <div>
+            <button class="btn-calc" onclick="calcCest()">Calcular Complacência</button>
+            <div id="cest-result" class="result-badge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Calc 5: Rva Rápida -->
+        <div class="calc-item">
+          <div>
+            <div class="card-header">5. Resistência de Vias Aéreas (Rva)</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">(Ppico - Pplat) / Fluxo em L/s. Auto-conversão de L/min.</p>
+            <div class="form-group">
+              <label>Pressão de Pico (Ppico cmH₂O)</label>
+              <input type="number" id="rva-ppico" class="form-input" placeholder="Ex: 32" value="32">
+            </div>
+            <div class="form-group">
+              <label>Pressão de Platô (Pplat cmH₂O)</label>
+              <input type="number" id="rva-pplat" class="form-input" placeholder="Ex: 18" value="18">
+            </div>
+            <div class="form-group">
+              <label>Fluxo Inspiratório (L/min)</label>
+              <input type="number" id="rva-flow" class="form-input" placeholder="Ex: 60" value="60">
+            </div>
+          </div>
+          <div>
+            <button class="btn-calc" onclick="calcRva()">Calcular Resistência</button>
+            <div id="rva-result" class="result-badge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Calc 6: Delta PP Numérico -->
+        <div class="calc-item">
+          <div>
+            <div class="card-header">6. Variação da Pressão de Pulso (ΔPP)</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Fórmula exata: [(PPmax - PPmin) / PPmédio] × 100.</p>
+            <div class="form-group">
+              <label>PP Máxima na Inspiração (mmHg)</label>
+              <input type="number" id="dpp-max" class="form-input" placeholder="Ex: 55" value="55">
+            </div>
+            <div class="form-group">
+              <label>PP Mínima na Expiração (mmHg)</label>
+              <input type="number" id="dpp-min" class="form-input" placeholder="Ex: 38" value="38">
+            </div>
+          </div>
+          <div>
+            <button class="btn-calc" onclick="calcDPP()">Calcular ΔPP (%)</button>
+            <div id="dpp-result" class="result-badge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Calc 7: Tempo de Ciclo & Relação I:E -->
+        <div class="calc-item">
+          <div>
+            <div class="card-header">7. Tempo de Ciclo & Relação I:E</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Cálculo temporal da ciclagem mandatória: Tciclo = 60 / FR.</p>
+            <div class="form-group">
+              <label>Frequência Respiratória (rpm)</label>
+              <input type="number" id="cycle-fr" class="form-input" placeholder="Ex: 16" value="16">
+            </div>
+            <div class="form-group">
+              <label>Tempo Inspiratório Programado (segundos)</label>
+              <input type="number" step="0.1" id="cycle-tinsp" class="form-input" placeholder="Ex: 1.0" value="1.0">
+            </div>
+          </div>
+          <div>
+            <button class="btn-calc" onclick="calcCycleTime()">Calcular Ciclo & Relação I:E</button>
+            <div id="cycle-result" class="result-badge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Checklist Delta PP -->
+        <div class="calc-item full-width">
+          <div>
+            <div class="card-header">8. Checklist de Validação Obrigatória do ΔPP</div>
+            <p style="font-size:0.88rem; color:var(--text-muted);">
+              A medida do ΔPP só possui valor preditivo para fluido-responsividade se <strong>TODOS os 7 critérios fisiológicos</strong> abaixo forem rigorosamente preenchidos:
+            </p>
+            <div class="checklist-form">
+              <label class="check-item"><input type="checkbox" class="deltapp-check"> <strong>1. Ritmo Cardíaco Sinusal Estrito:</strong> Ausência de Fibrilação Atrial, extrassístoles frequentes ou arritmias que alterem o enchimento ventricular.</label>
+              <label class="check-item"><input type="checkbox" class="deltapp-check"> <strong>2. Paciente 100% Passivo:</strong> Sem qualquer esforço muscular inspiratório espontâneo (ausência de deflexões negativas ou drive respiratório).</label>
+              <label class="check-item"><input type="checkbox" class="deltapp-check"> <strong>3. Volume Corrente Adequado:</strong> Mínimo de <strong>8 mL/kg de peso predito (PBW)</strong>. Volumes menores (ex.: 6 mL/kg) subestimam a oscilação cardíaca intratorácica gerando falsos negativos.</label>
+              <label class="check-item"><input type="checkbox" class="deltapp-check"> <strong>4. Complacência Estática Preservada:</strong> Cest > 30 mL/cmH₂O (pulmões excessivamente rígidos não transmitem a pressão à vasculatura pulmonar).</label>
+              <label class="check-item"><input type="checkbox" class="deltapp-check"> <strong>5. Tórax Fechado:</strong> Ausência de esternotomia aberta ou drenos torácicos com borbulhamento maciço.</label>
+              <label class="check-item"><input type="checkbox" class="deltapp-check"> <strong>6. Ausência de Cor Pulmonale Agudo:</strong> Sem sobrecarga aguda ou disfunção severa do Ventrículo Direito.</label>
+              <label class="check-item"><input type="checkbox" class="deltapp-check"> <strong>7. Relação FC / FR > 3,6:</strong> Garante ciclos cardíacos suficientes durante cada fase ventilatória para registro fidedigno.</label>
+            </div>
+          </div>
+          <div id="deltapp-validation-banner" class="validation-banner invalid hidden" style="margin-top: 1rem;"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 1 ==================== -->
+    <section id="mod1" class="module-section">
+      <h2 class="section-title">Módulo 1: Fundamentos, Circuito e Princípios do Ciclo</h2>
+      <p class="section-desc">Fisiologia de pressões, mistura de gases medicinais, ordem correta dos acessórios e dinâmica valvular.</p>
+
+      <div class="card">
+        <div class="card-header">1. Pressão Negativa vs. Pressão Positiva</div>
+        <p><strong>Respiração Espontânea:</strong> Ocorre por <em>pressão negativa</em>. A contração do diafragma expande a caixa torácica, traciona a pleura e cria um vácuo subatmosférico intra-alveolar que suga o ar para dentro. A expiração tranquila é passiva, movida pelo recolhimento elástico do pulmão.</p>
+        <p><strong>Ventilação Mecânica Invasiva:</strong> Opera por <em>pressão positiva</em>. O ventilador gera pressão positiva na via aérea através de uma cânula orotraqueal ou de traqueostomia com balonete (cuff) insuflado, expandindo o pulmão de forma centrífuga. A pressão positiva altera a hemodinâmica, pois aumenta a pressão intratorácica média e reduz o retorno venoso para o coração direito.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">2. Gases Medicinais & Titulação da FiO₂</div>
+        <p>O ventilador de UTI atua como um misturador (blender) pneumático interno conectado a duas redes de gases:</p>
+        <ul>
+          <li><strong>Oxigênio Puro (O₂ Medicinal):</strong> 100% de concentração.</li>
+          <li><strong>Ar Comprimido Medicinal:</strong> Aproximadamente 21% de O₂ e 78–79% de Nitrogênio.</li>
+        </ul>
+        <div class="callout callout-warning">
+          <strong>Cenários Críticos de Fonte Única:</strong>
+          • <em>Transporte Intra-hospitalar:</em> Frequentemente utiliza-se apenas o cilindro de O₂ (FiO₂ ajustada a 100%) para evitar hipóxia acidental e simplificar a logística, conforme os recursos do equipamento de transporte.<br>
+          • <em>Queda de Rede de Oxigênio:</em> Se faltar oxigênio no hospital, o ventilador ligado ao ar comprimido continua ciclando o paciente sob pressão positiva com FiO₂ a 21%. Se faltar ar comprimido, o ventilador passa a entregar 100% de O₂.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">3. Arquitetura do Circuito & Espaço Morto Instrumental</div>
+        <p>O <strong>espaço morto instrumental</strong> compreende todo o trajeto do circuito localizado <strong>da peça em Y até o paciente</strong>, onde não há separação de ramos e não ocorre troca gasosa:</p>
+        
+        <div class="diagram-box">[Ramo Insp] \
+             ( Peça em Y ) -> [Capnógrafo] -> [Filtro HME/HMEF] -> [Flex Tube] -> [Tubo / TOT]
+[Ramo Exp]  /</div>
+
+        <h4>Componentes Sequenciais e Funções:</h4>
+        <ol>
+          <li><strong>Peça em Y:</strong> Ponto de confluência onde o fluxo bidirecional se torna via única em direção ao paciente.</li>
+          <li><strong>Capnógrafo (Mainstream):</strong> Posicionado imediatamente após a peça em Y para registrar a curva de CO₂ exalado sem diluição mecânica.</li>
+          <li><strong>Filtro Umidificador (HME / HMEF / HEPA):</strong> A via aérea artificial desvia do nariz e da laringe, que normalmente aquecem, umidificam e filtram o ar. O filtro é indispensável para prevenir o ressecamento do epitélio ciliar e a formação de rolhas:
+            <ul>
+              <li><em>HME:</em> Apenas umidificação e recuperação térmica.</li>
+              <li><em>HMEF:</em> Umidificação + barreira filtrante bacteriana/viral (o mais comum na UTI).</li>
+              <li><em>HEPA:</em> Filtro absoluto de alta retenção de partículas virais submicrônicas (Tuberculose, Covid-19).</li>
+            </ul>
+          </li>
+          <li><strong>Flex Tube (Traqueinha corrugada de extensão):</strong> Fornece mobilidade mecânica ao tubo e reduz a tração sobre a via aérea.
+            <div class="callout callout-danger" style="margin-top: 0.5rem;">
+              <strong>Dica no Manejo de Hipercapnia Grave:</strong> Em pacientes retendo CO₂ refratário e acidose respiratória severa, a simples remoção do Flex Tube reduz imediatamente cerca de <strong>20 a 30 mL de espaço morto instrumental</strong>, aumentando expressivamente a ventilação alveolar efetiva!
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-header">4. Dinâmica Valvular & Localização dos Sensores</div>
+        <p>O ventilador sincroniza duas válvulas solenoides principais com extrema precisão:</p>
+        <ul>
+          <li><strong>Fase Inspiratória:</strong> Válvula Inspiratória ABERTA | Válvula Expiratória FECHADA (pressuriza o circuito e insufla o tórax).</li>
+          <li><strong>Fase Expiratória:</strong> Válvula Inspiratória FECHADA | Válvula Expiratória ABERTA (permite o deságue passivo do ar até o nível da PEEP).</li>
+          <li><strong>Pausas Oclusivas (Inspiratória e Expiratória):</strong> AMBAS AS VÁLVULAS FECHADAS (o sistema fica ocluso e o fluxo cessa para medição das pressões estáticas).</li>
+        </ul>
+        <div class="callout callout-success">
+          <strong>Aviso Técnico de Segurança:</strong> Não existem sensores de pressão ou fluxo dentro do pulmão do paciente. Todas as aferições exibidas na tela do ventilador são obtidas através de sensores posicionados na carcaça do equipamento ou na peça em Y.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">5. Curvas Básicas no Tempo (Pressão, Fluxo e Volume)</div>
+        <ul>
+          <li><strong>Pressão × Tempo (P × t):</strong> Revela o nível de PEEP basal, a subida inspiratória até a Pressão de Pico (Ppico) e o patamar de Pressão de Platô (Pplat) obtido na pausa inspiratória.</li>
+          <li><strong>Fluxo × Tempo (V̇ × t):</strong> Fluxo inspiratório positivo (acima de zero) e expiratório negativo (abaixo de zero). Em PCV o fluxo é desacelerado; em VCV clássico o fluxo é retangular/quadrado. <em>Ponto Crítico:</em> Se a curva de fluxo expiratório não retornar à linha de base de zero antes do próximo ciclo, há esvaziamento pulmonar incompleto, confirmando a presença de <strong>Auto-PEEP</strong>.</li>
+          <li><strong>Volume × Tempo (V × t):</strong> Mostra a insuflação e deflação do volume corrente (VT). O retorno da curva a zero não significa que o pulmão esvaziou todo o ar, mas sim que o volume que entrou conseguiu sair. Se não retornar a zero, há suspeita de vazamento de cuff ou circuito.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 2 ==================== -->
+    <section id="mod2" class="module-section">
+      <h2 class="section-title">Módulo 2: Mecânica Avançada, As 8 Pressões e Fenótipos</h2>
+      <p class="section-desc">Gradientes pressóricos alveolares, tempo-dependência e o comparativo definitivo entre o Pulmão Obstrutivo e o Pulmão com SARA.</p>
+
+      <div class="card">
+        <div class="card-header">1. As 8 Pressões da Mecânica Ventilatória</div>
+        
+        <div class="diagram-box">Ppico (ex: 20 cmH2O)  ---------¬
+                                | -> Pressão Resistiva = Ppico - Pplat (ex: 2 cmH2O)
+Pplat (ex: 18 cmH2O) ---------+¬
+                                |
+                                | -> DRIVING PRESSURE = Pplat - PEEPtot (ex: 11 cmH2O)
+                                |    (Estresse alveolar de distensão)
+                                |
+PEEP Total (ex: 7 cmH2O) -----+¬
+                                | -> Auto-PEEP = PEEPtot - PEEPext (ex: 2 cmH2O)
+PEEP Extrínseca (ex: 5 cmH2O)-+-</div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Parâmetro</th>
+                <th>Definição / Origem</th>
+                <th>Relevância Clínica & Metas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>PEEP Extrínseca</strong></td>
+                <td>Programada pelo médico no ventilador (ex.: 5 cmH₂O).</td>
+                <td>Pressão positiva imposta no fim da expiração para evitar colapso e desrecrutamento alveolar.</td>
+              </tr>
+              <tr>
+                <td><strong>Pressão de Pico (Ppico)</strong></td>
+                <td>Máxima pressão dinâmica registrada durante a entrega do fluxo inspiratório.</td>
+                <td>Soma do componente resistivo (tubo + brônquios) com o elástico (parênquima pulmonar). Meta: &lt; 35 a 40 cmH₂O.</td>
+              </tr>
+              <tr>
+                <td><strong>Sobre-PEEP (ΔP Máquina)</strong></td>
+                <td>Ppico − PEEP Extrínseca.</td>
+                <td>Gradiente total de pressurização fornecido pelo ventilador na fase inspiratória.</td>
+              </tr>
+              <tr>
+                <td><strong>Pressão de Platô (Pplat)</strong></td>
+                <td>Aferida mediante <strong>Pausa Inspiratória</strong> estática (fluxo zero).</td>
+                <td><strong>Pressão estática alveolar real</strong>. Limite máximo de segurança para proteção pulmonar: <strong>≤ 30 cmH₂O</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>Pressão Resistiva (Pres)</strong></td>
+                <td>Ppico − Pplat.</td>
+                <td>Gradiente consumido pelo atrito contra o tubo e árvore brônquica. Valor normal em intubado: <strong>≤ 2 a 4 cmH₂O</strong>.</td>
+              </tr>
+              <tr>
+                <td><strong>PEEP Total</strong></td>
+                <td>Aferida mediante <strong>Pausa Expiratória</strong> estática ao final do ciclo.</td>
+                <td>Pressão alveolar estática de repouso no final da expiração passiva.</td>
+              </tr>
+              <tr>
+                <td><strong>PEEP Intrínseca (Auto-PEEP)</strong></td>
+                <td>PEEP Total − PEEP Extrínseca.</td>
+                <td>Ar aprisionado por tempo expiratório insuficiente. Prejudicial à hemodinâmica e ao disparo.</td>
+              </tr>
+              <tr>
+                <td><strong>Driving Pressure (ΔP alv)</strong></td>
+                <td><strong>Pplat − PEEP Total</strong>.</td>
+                <td><strong>Estresse de cisalhamento alveolar (distensão cíclica)</strong>. Meta estrita de proteção: <strong>≤ 14 a 15 cmH₂O</strong>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">2. Constantes de Tempo (τ) & Fenótipos Pulmonares</div>
+        <p>A velocidade de equilíbrio das pressões e do fluxo depende do produto da complacência pela resistência do sistema respiratório ($\tau = C \times R$):</p>
+        
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Característica</th>
+                <th>Padrão Obstrutivo (Asma / DPOC)</th>
+                <th>Padrão Restritivo / SARA (Baby Lung)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Analogia Didática</strong></td>
+                <td>Balão altamente complacente, mas com bocal extremamente fino e estreito.</td>
+                <td>Balão de borracha pesada e rígida (baixa complacência, parênquima duro).</td>
+              </tr>
+              <tr>
+                <td><strong>Constante de Tempo (τ)</strong></td>
+                <td><strong>Muito Longa:</strong> O esvaziamento pulmonar é extremamente lento.</td>
+                <td><strong>Curta:</strong> Equilibra pressões e fluxos em frações de segundo.</td>
+              </tr>
+              <tr>
+                <td><strong>Gradiente de Pressão Típico</strong></td>
+                <td>Ppico muito elevado com Platô baixo (Pressão Resistiva muito alta).</td>
+                <td>Ppico elevado com Platô quase colado no Pico (Driving Pressure elevada).</td>
+              </tr>
+              <tr>
+                <td><strong>Estratégia de Frequência (FR)</strong></td>
+                <td><strong>Baixa (10 a 14 rpm):</strong> Garante tempo expiratório longo para evitar Auto-PEEP.</td>
+                <td><strong>Alta (25 a 35 rpm):</strong> Compensa o baixo volume corrente protetor (4-6 mL/kg).</td>
+              </tr>
+              <tr>
+                <td><strong>Relação I:E Recomendada</strong></td>
+                <td>1:3 a 1:5 (expiração muito prolongada).</td>
+                <td>1:1,5 a 1:2.</td>
+              </tr>
+              <tr>
+                <td><strong>Principal Mecanismo de Morte</strong></td>
+                <td><strong>Colapso Hemodinâmico:</strong> Auto-PEEP eleva pressão intratorácica, zera o retorno venoso e causa choque obstrutivo.</td>
+                <td><strong>Falha de Troca Gasosa e Biotrauma:</strong> Hipoxemia refratária, lesão induzida pela ventilação (VILI) e choque distributivo.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">3. Peso Predito (PBW — Fórmulas de Devine)</div>
+        <p>O tamanho do pulmão fisiológico correlaciona-se estritamente com a altura e o sexo anatômico, e nunca com o peso atual medido na balança (a obesidade e o anasarca não criam novos alvéolos):</p>
+        <div class="formula-box">Homens:  PBW (kg) = 50 + 0,91 × (Altura em cm - 152,4)
+Mulheres: PBW (kg) = 45,5 + 0,91 × (Altura em cm - 152,4)</div>
+        <p>
+          • <strong>Meta Protetora na SARA:</strong> 4 a 6 mL/kg de peso predito.<br>
+          • <strong>Meta em Pulmão sem Lesão (Pós-operatório/Neuro):</strong> 6 a 8 mL/kg de peso predito.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 3 ==================== -->
+    <section id="mod3" class="module-section">
+      <h2 class="section-title">Módulo 3: Troca Gasosa, Cinética do CO₂ e Modo VCV</h2>
+      <p class="section-desc">Fisiopatologia de Shunt vs. Espaço Morto, dinâmica da eliminação de CO₂ e particularidades do Volume Controlado.</p>
+
+      <div class="card">
+        <div class="card-header">1. Shunt Alveolar vs. Espaço Morto Alveolar</div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Critério Avaliado</th>
+                <th>Efeito Shunt (V/Q → 0)</th>
+                <th>Efeito Espaço Morto (V/Q → ∞)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Fisiopatologia</strong></td>
+                <td>Alvéolo colabado, atelectasiado ou preenchido por exsudato, com capilar perfundido.</td>
+                <td>Alvéolo ventilado, porém com capilar ocluído ou colabado por sobrepressão.</td>
+              </tr>
+              <tr>
+                <td><strong>Exemplo Clínico Clássico</strong></td>
+                <td>SARA grave, pneumonia lobar consolidada, atelectasia obstrutiva maciça.</td>
+                <td>Tromboembolismo Pulmonar (TEP), hiperinsuflação alveolar por PEEP excessiva.</td>
+              </tr>
+              <tr>
+                <td><strong>Consequência Gasométrica</strong></td>
+                <td><strong>Hipoxemia refratária</strong> (queda brutal de PaO₂ pouco responsiva à FiO₂ pura).</td>
+                <td><strong>Retenção de CO₂</strong> (hipercapnia refratária com ventilação minuto desperdiçada).</td>
+              </tr>
+              <tr>
+                <td><strong>Papel Terapêutico da PEEP</strong></td>
+                <td><strong>Terapêutica:</strong> Recruta e estabiliza unidades alveolares colabadas, melhorando a troca.</td>
+                <td><strong>Prejudicial se excessiva:</strong> Comprime a microcirculação capilar perialveolar, agravando o espaço morto.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">2. Cinética do CO₂ & Ventilação Alveolar Efetiva</div>
+        <p>A eliminação de dióxido de carbono não depende da ventilação minuto absoluta exibida no monitor do ventilador ($\dot{V}E$), mas sim da <strong>Ventilação Alveolar Minuto ($\dot{V}A$)</strong>:</p>
+        <div class="formula-box">Ventilação Minuto Total:   V̇E = FR × VT
+Ventilação Alveolar Efetiva: V̇A = FR × (VT - Espaço Morto Fisiológico e Instrumental)</div>
+        
+        <div class="callout callout-warning">
+          <strong>Impacto Prático Vital:</strong> Em pacientes obstrutivos com grande espaço morto instrumental e anatômico, <em>aumentar o volume corrente com frequências respiratórias moderadas</em> lava muito mais CO₂ do que aumentar a frequência às custas de volumes pequenos. Além disso, frequências altas encurtam o tempo expiratório e precipitam Auto-PEEP severa.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">3. Modo VCV (Volume Controlado Clássico)</div>
+        <p>No VCV clássico com fluxo constante (onda retangular/quadrada):</p>
+        <ul>
+          <li><strong>Variável de Controle:</strong> Volume Corrente (VT) e Fluxo Inspiratório ajustados previamente.</li>
+          <li><strong>Variável Dependente:</strong> A Pressão na via aérea é livre e flutua diretamente conforme a mecânica (complacência e resistência) do paciente.</li>
+          <li><strong>Curva de Fluxo:</strong> Retangular na inspiração e desacelerada negativa na expiração.</li>
+          <li><strong>Curva de Pressão:</strong> Sobe em rampa linear progressiva até atingir a Pressão de Pico.</li>
+          <li><strong>Ciclagem:</strong> Cicla a <strong>VOLUME</strong> (a válvula inspiratória oclui assim que o volume alvo configurado é totalmente injetado no circuito).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">4. Mecanismos de Disparo (Trigger)</div>
+        <ul>
+          <li><strong>Disparo a Tempo:</strong> Deflagrado automaticamente pelo relógio interno do ventilador, baseado na frequência mandatória configurada pelo médico ($T_{ciclo} = 60 / FR$).</li>
+          <li><strong>Disparo por Pressão (ΔP):</strong> O paciente gera uma queda pressórica negativa abaixo da linha de base de PEEP (ex.: −1 a −2 cmH₂O). Impõe maior trabalho muscular inicial.</li>
+          <li><strong>Disparo por Fluxo (ΔV̇ / Bias Flow):</strong> O ventilador mantém um fluxo contínuo basal pelo circuito. Quando o paciente inicia o esforço e desvia parte desse gás para si (ex.: 1,5 a 2 L/min), o sensor detecta a queda no ramo expiratório e dispara o ciclo. É muito mais sensível e reduz o trabalho inspiratório inicial.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 4 ==================== -->
+    <section id="mod4" class="module-section">
+      <h2 class="section-title">Módulo 4: Modo PSV, Ciclagem e Assincronias</h2>
+      <p class="section-desc">Princípios da ventilação espontânea assistida, sensibilidade expiratória (Esens) e ajuste fino de pressurização (Rise Time).</p>
+
+      <div class="card">
+        <div class="card-header">1. Pressão de Suporte (PSV)</div>
+        <p>Modalidade puramente <strong>assistida/espontânea</strong> indicada para fase de desmame ou pacientes com estabilidade de drive respiratório:</p>
+        <ul>
+          <li><strong>Variável de Controle:</strong> Pressão (Pressão de Suporte mantida acima do patamar de PEEP).</li>
+          <li><strong>Disparo:</strong> Exclusivamente deflagrado pelo esforço inspiratório do paciente (a pressão ou fluxo). Não há frequência mandatória de base.</li>
+          <li><strong>Ciclagem:</strong> Exclusivamente a <strong>FLUXO</strong> (porcentagem da desaceleração do fluxo inspiratório de pico).</li>
+          <li><strong>Backup de Apneia:</strong> Janela temporal de segurança (ex.: 15 a 20 segundos). Se o paciente parar de realizar esforços, o ventilador assume automaticamente um modo controlado de resgate (VCV ou PCV).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">2. Sensibilidade Expiratória (Critério de Ciclagem a Fluxo — Esens)</div>
+        <p>O ventilador encerra a fase inspiratória e abre a válvula expiratória assim que o fluxo inspiratório desacelera até atingir uma porcentagem programada do pico máximo inicial:</p>
+        
+        <div class="diagram-box">Pico de Fluxo |    /\
+               |   /  \
+               |  /    * <--- Ponto de Ciclagem (ex: 25% do Pico)
+          (0)  +--------\--------> Tempo
+                        [Ciclagem: Abre válvula expiratória]</div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Fenótipo Pulmonar</th>
+                <th>Comportamento Fisiológico do Fluxo</th>
+                <th>Ajuste da Sensibilidade Expiratória (Esens)</th>
+                <th>Objetivo Clínico</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Obstrutivo (DPOC / Asma)</strong></td>
+                <td>O fluxo demora a desacelerar por conta da constante de tempo muito longa.</td>
+                <td><strong>Aumentar o limiar (ex.: 40% a 50%)</strong></td>
+                <td>Encerra a inspiração mecânica precocemente e concede mais tempo para esvaziamento expiratório, prevenindo Auto-PEEP e ciclagem tardia.</td>
+              </tr>
+              <tr>
+                <td><strong>Restritivo / SARA</strong></td>
+                <td>O fluxo desacelera rapidamente pela rigidez elástica (constante de tempo curta).</td>
+                <td><strong>Reduzir o limiar (ex.: 10% a 15%)</strong></td>
+                <td>Evita o encerramento prematuro da inspiração antes que o pulmão rígido atinja volume adequado, prevenindo duplo disparo.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">3. Assincronias de Cabeceira & Rise Time (Rampa)</div>
+        <ul>
+          <li><strong>Autodisparo:</strong> O ventilador cicla sem esforço do paciente por gatilho excessivamente sensível, condensação no circuito ou vazamento no cuff.</li>
+          <li><strong>Disparo Ineficaz:</strong> O paciente contrai a musculatura, mas a Auto-PEEP ou fraqueza muscular impede que o esforço vença o limiar do gatilho.</li>
+          <li><strong>Ciclagem Precoce:</strong> A máquina encerra a inspiração antes do paciente relaxar a musculatura neural (risco de duplo disparo / breath stacking).</li>
+          <li><strong>Ciclagem Tardia:</strong> A máquina continua pressurizando quando o paciente já começou a expirar ativamente (gera pico na curva de pressão expiratório).</li>
+          <li><strong>Rise Time (Rampa de Subida):</strong> Define a velocidade com que o ventilador atinge a pressão programada. Rampa rápida demais causa <em>overshoot</em> de entrada (pico turbulento com sensação de choque); rampa lenta demais não atende à demanda inicial do paciente com fome de ar.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ==================== MÓDULO 5 ==================== -->
+    <section id="mod5" class="module-section">
+      <h2 class="section-title">Módulo 5: Cálculos de Mecânica Ventilatória e Avaliação de Fluido-Responsividade</h2>
+      <p class="section-desc">Fórmulas fundamentais de complacência estática, resistência de vias aéreas e validação estrita da variação da pressão de pulso (ΔPP).</p>
+
+      <div class="card">
+        <div class="card-header">1. Complacência Estática (Cest)</div>
+        <p>Mede a distensibilidade elástica conjunta do parênquima pulmonar e da caixa torácica em condições estáticas (sem fluxo):</p>
+        <div class="formula-box">Cest = VT / (Pplat - PEEP Total) = VT / Driving Pressure</div>
+        <ul>
+          <li><strong>Normal em intubado:</strong> 50 a 80 mL/cmH₂O.</li>
+          <li><strong>Comprometimento moderado:</strong> 30 a 50 mL/cmH₂O.</li>
+          <li><strong>SARA grave / Pulmão Rígido (Baby Lung):</strong> &lt; 30 mL/cmH₂O (valores &lt; 20 indicam extrema gravidade).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">2. Resistência de Vias Aéreas (Rva)</div>
+        <p>Calculada em modo <strong>VCV clássico com onda de fluxo constante (quadrada)</strong> após pausa inspiratória:</p>
+        <div class="formula-box">Rva = (Ppico - Pplat) / Fluxo Inspiratório (em L/s)
+* Nota de Conversão: Divida o fluxo em L/min por 60 para obter L/s (ex.: 60 L/min = 1,0 L/s; 30 L/min = 0,5 L/s).</div>
+        <ul>
+          <li><strong>Normal em paciente intubado com cânula traqueal:</strong> Até 10 a 12 cmH₂O·s/L.</li>
+          <li><strong>Resistência Aumentada (Broncoespasmo, rolha de secreção, tubo fino):</strong> &gt; 12 a 15 cmH₂O·s/L.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-header">3. Variação da Pressão de Pulso (ΔPP) e Fluido-Responsividade</div>
+        <p>A interação coração-pulmão sob ventilação com pressão positiva prediz se a infusão de fluidos resultará em aumento significativo do débito cardíaco:</p>
+        <div class="formula-box">ΔPP (%) = [(PPmax - PPmin) / ((PPmax + PPmin) / 2)] × 100
+PP (Pressão de Pulso) = Pressão Arterial Sistólica - Pressão Arterial Diastólica</div>
+        <p><strong>Ponto de Corte Clássico:</strong> ΔPP &gt; 12% a 13% prediz que o paciente encontra-se na porção ascendente da curva de Frank-Starling (fluido-responsivo).</p>
+        
+        <div class="callout callout-danger">
+          <strong>Critérios Obrigatórios para Validade da ΔPP (Armadilhas Frequentes):</strong>
+          1. <strong>Ritmo Cardíaco Sinusal Estrito:</strong> Arritmias ou Fibrilação Atrial anulam a predição.<br>
+          2. <strong>Paciente 100% Passivo:</strong> Sem esforços musculares ou assincronias.<br>
+          3. <strong>Volume Corrente Adequado:</strong> Mínimo de <strong>8 mL/kg de peso predito</strong>. Não superventile pacientes com SARA grave apenas para medir o ΔPP!<br>
+          4. Complacência estática &gt; 30 mL/cmH₂O, tórax fechado e ausência de Cor Pulmonale agudo.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation (Mobile) -->
+  <nav class="bottom-nav">
+    <a href="#plantao" class="bottom-nav-item">
+      <span class="icon">🚨</span>
+      <span>Plantão</span>
+    </a>
+    <a href="#calculadoras" class="bottom-nav-item">
+      <span class="icon">🧮</span>
+      <span>Cálculos</span>
+    </a>
+    <a href="#mod1" class="bottom-nav-item active">
+      <span class="icon">📚</span>
+      <span>Manual</span>
+    </a>
+    <a href="#main-content" class="bottom-nav-item" onclick="window.scrollTo(0,0);">
+      <span class="icon">🔝</span>
+      <span>Topo</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

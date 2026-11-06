@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>VM Pro — Manual Clínico & Decisão em Ventilação Mecânica</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,6 +71,7 @@ body {
   z-index: 100;
   overflow-y: auto;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
 }
 
 .brand-header {
@@ -337,6 +338,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 h4 {
@@ -370,6 +373,7 @@ li {
   border-radius: 8px;
   border: 1px solid var(--border-color);
   background: rgba(15, 23, 42, 0.5);
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
@@ -435,31 +439,24 @@ tr:hover {
 }
 
 /* Formula & Diagram Boxes */
-.formula-box {
+.formula-box, .diagram-box {
   background-color: #0f172a;
   border: 1px solid rgba(56, 189, 248, 0.2);
   color: #38bdf8;
   padding: 1rem 1.25rem;
   border-radius: 8px;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 0.92rem;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.85rem;
   margin: 1rem 0;
   overflow-x: auto;
   white-space: pre-wrap;
+  line-height: 1.45;
 }
 
 .diagram-box {
-  background-color: #0f172a;
-  border: 1px solid var(--border-color);
   color: #e2e8f0;
-  padding: 1.2rem;
-  border-radius: 8px;
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 0.85rem;
-  line-height: 1.45;
+  border-color: var(--border-color);
   white-space: pre;
-  overflow-x: auto;
-  margin: 1rem 0;
 }
 
 /* Calculators Grid & Form Layout */
@@ -676,16 +673,24 @@ tr:hover {
 @media (max-width: 900px) {
   #sidebar {
     transform: translateX(-100%);
-    transition: transform 0.25s ease;
   }
   
   #sidebar.open {
     transform: translateX(0);
   }
+
+  /* Aplica um fundo escuro quando o menu estiver aberto no mobile */
+  #sidebar.open::after {
+    content: '';
+    position: fixed;
+    top: 0; left: var(--sidebar-width); right: -100vw; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: -1;
+  }
   
   #main-content {
     margin-left: 0;
-    padding: 1.25rem 1rem 6rem;
+    padding: 1rem 1rem 6rem;
   }
   
   .mobile-header {
@@ -698,6 +703,16 @@ tr:hover {
   
   .calc-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Melhoria no scroll das tabelas no celular */
+  .table-responsive {
+    border-right: none;
+    border-left: none;
+    border-radius: 0;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding: 0 1rem;
   }
 }
   </style>
@@ -732,40 +747,45 @@ tr:hover {
     <ul class="nav-list">
       <li class="nav-category">Ação Imediata</li>
       <li class="nav-item">
-        <a href="#plantao" class="nav-link">
+        <a href="#plantao" class="nav-link" onclick="closeSidebarMobile()">
           <span class="nav-badge danger">🚨</span> Plantão & Troubleshooting
         </a>
       </li>
       <li class="nav-item">
-        <a href="#calculadoras" class="nav-link">
+        <a href="#calculadoras" class="nav-link" onclick="closeSidebarMobile()">
           <span class="nav-badge accent">🧮</span> Calculadoras de Cabeceira
         </a>
       </li>
 
       <li class="nav-category">Manual Completo Revisado</li>
       <li class="nav-item">
-        <a href="#mod1" class="nav-link active">
+        <a href="#mod1" class="nav-link active" onclick="closeSidebarMobile()">
           <span class="nav-badge">01</span> Circuito & Fisiologia Básica
         </a>
       </li>
       <li class="nav-item">
-        <a href="#mod2" class="nav-link">
+        <a href="#mod2" class="nav-link" onclick="closeSidebarMobile()">
           <span class="nav-badge">02</span> Mecânica, As 8 Pressões & Fenótipos
         </a>
       </li>
       <li class="nav-item">
-        <a href="#mod3" class="nav-link">
+        <a href="#mod3" class="nav-link" onclick="closeSidebarMobile()">
           <span class="nav-badge">03</span> Relação V/Q, CO₂ & Modo VCV
         </a>
       </li>
       <li class="nav-item">
-        <a href="#mod4" class="nav-link">
+        <a href="#mod4" class="nav-link" onclick="closeSidebarMobile()">
           <span class="nav-badge">04</span> Modo PSV, Ciclagem & Assincronias
         </a>
       </li>
       <li class="nav-item">
-        <a href="#mod5" class="nav-link">
+        <a href="#mod5" class="nav-link" onclick="closeSidebarMobile()">
           <span class="nav-badge">05</span> Cálculos de Mecânica & ΔPP
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#mod6" class="nav-link" onclick="closeSidebarMobile()">
+          <span class="nav-badge" style="background:#8b5cf6; color:#ddd6fe;">06</span> Gasometria & Ácido-Base
         </a>
       </li>
     </ul>
@@ -785,6 +805,7 @@ tr:hover {
         <a href="#calculadoras" class="pill-btn">🧮 Calculadoras</a>
         <a href="#calc-pbw" class="pill-btn">⚖️ Peso Predito (PBW)</a>
         <a href="#calc-mech-all" class="pill-btn">📊 Mecânica Completa</a>
+        <a href="#mod6" class="pill-btn" style="border-color:#8b5cf6; color:#c4b5fd;">🩸 Gasometria</a>
       </div>
     </div>
 
@@ -1033,10 +1054,36 @@ tr:hover {
           </div>
         </div>
 
-        <!-- Calc 6: Delta PP Numérico -->
+        <!-- Calc 6: Anion Gap (Gasometria) -->
         <div class="calc-item">
           <div>
-            <div class="card-header">6. Variação da Pressão de Pulso (ΔPP)</div>
+            <div class="card-header" style="color: #c4b5fd;">6. Anion Gap (Hiato Aniônico)</div>
+            <p style="font-size:0.85rem; color:var(--text-muted);">Calcule para classificar Acidoses Metabólicas.</p>
+            <div class="form-group">
+              <label>Sódio (Na⁺ mEq/L)</label>
+              <input type="number" id="ag-na" class="form-input" placeholder="Ex: 140" value="140">
+            </div>
+            <div style="display:flex; gap:10px;">
+              <div class="form-group" style="flex:1;">
+                <label>Cloro (Cl⁻)</label>
+                <input type="number" id="ag-cl" class="form-input" placeholder="Ex: 105" value="105">
+              </div>
+              <div class="form-group" style="flex:1;">
+                <label>Bicarbonato (HCO₃⁻)</label>
+                <input type="number" id="ag-hco3" class="form-input" placeholder="Ex: 24" value="24">
+              </div>
+            </div>
+          </div>
+          <div>
+            <button class="btn-calc" style="background-color:#8b5cf6;" onclick="calcAnionGap()">Calcular Anion Gap</button>
+            <div id="ag-result" class="result-badge" style="display:none;"></div>
+          </div>
+        </div>
+
+        <!-- Calc 7: Delta PP Numérico -->
+        <div class="calc-item">
+          <div>
+            <div class="card-header">7. Variação da Pressão de Pulso (ΔPP)</div>
             <p style="font-size:0.85rem; color:var(--text-muted);">Fórmula exata: [(PPmax - PPmin) / PPmédio] × 100.</p>
             <div class="form-group">
               <label>PP Máxima na Inspiração (mmHg)</label>
@@ -1050,26 +1097,6 @@ tr:hover {
           <div>
             <button class="btn-calc" onclick="calcDPP()">Calcular ΔPP (%)</button>
             <div id="dpp-result" class="result-badge" style="display:none;"></div>
-          </div>
-        </div>
-
-        <!-- Calc 7: Tempo de Ciclo & Relação I:E -->
-        <div class="calc-item">
-          <div>
-            <div class="card-header">7. Tempo de Ciclo & Relação I:E</div>
-            <p style="font-size:0.85rem; color:var(--text-muted);">Cálculo temporal da ciclagem mandatória: Tciclo = 60 / FR.</p>
-            <div class="form-group">
-              <label>Frequência Respiratória (rpm)</label>
-              <input type="number" id="cycle-fr" class="form-input" placeholder="Ex: 16" value="16">
-            </div>
-            <div class="form-group">
-              <label>Tempo Inspiratório Programado (segundos)</label>
-              <input type="number" step="0.1" id="cycle-tinsp" class="form-input" placeholder="Ex: 1.0" value="1.0">
-            </div>
-          </div>
-          <div>
-            <button class="btn-calc" onclick="calcCycleTime()">Calcular Ciclo & Relação I:E</button>
-            <div id="cycle-result" class="result-badge" style="display:none;"></div>
           </div>
         </div>
 
@@ -1090,7 +1117,7 @@ tr:hover {
               <label class="check-item"><input type="checkbox" class="deltapp-check"> <strong>7. Relação FC / FR > 3,6:</strong> Garante ciclos cardíacos suficientes durante cada fase ventilatória para registro fidedigno.</label>
             </div>
           </div>
-          <div id="deltapp-validation-banner" class="validation-banner invalid hidden" style="margin-top: 1rem;"></div>
+          <div id="deltapp-validation-banner" class="validation-banner invalid" style="display:none; margin-top: 1rem;"></div>
         </div>
 
       </div>
@@ -1491,418 +1518,382 @@ PP (Pressão de Pulso) = Pressão Arterial Sistólica - Pressão Arterial Diast�
       </div>
     </section>
 
+    <!-- ==================== MÓDULO 6: GASOMETRIA ==================== -->
+    <section id="mod6" class="module-section">
+      <h2 class="section-title" style="color: #c4b5fd;">🩸 Módulo 6: Gasometria Arterial & Distúrbios Ácido-Base</h2>
+      <p class="section-desc">Interpretação rápida de distúrbios respiratórios, metabólicos, mistos e avaliação do Base Excess no trauma.</p>
+
+      <div class="card">
+        <div class="card-header" style="color:#a78bfa;">1. Valores Normais (Referência)</div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Parâmetro</th>
+                <th>Valor Normal</th>
+                <th>Significado Clínico</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>pH</strong></td>
+                <td>7,35 a 7,45</td>
+                <td>Equilíbrio ácido-base global. &lt; 7,35 = Acidemia | &gt; 7,45 = Alcalemia.</td>
+              </tr>
+              <tr>
+                <td><strong>PaCO₂</strong></td>
+                <td>35 a 45 mmHg</td>
+                <td>Componente <strong>Respiratório</strong> (Ventilação alveolar).</td>
+              </tr>
+              <tr>
+                <td><strong>HCO₃⁻</strong></td>
+                <td>22 a 26 mEq/L</td>
+                <td>Componente <strong>Metabólico</strong> (Rim e tamponamento basal).</td>
+              </tr>
+              <tr>
+                <td><strong>PaO₂</strong></td>
+                <td>80 a 100 mmHg</td>
+                <td>Oxigenação arterial (depende da FiO₂ e altitude).</td>
+              </tr>
+              <tr>
+                <td><strong>Base Excess (BE)</strong></td>
+                <td>-2 a +2 mEq/L</td>
+                <td>Excesso ou déficit de bases. Reflete distúrbio metabólico.</td>
+              </tr>
+              <tr>
+                <td><strong>Lactato</strong></td>
+                <td>&lt; 2,0 mmol/L</td>
+                <td>Marcador de hipoperfusão tecidual / metabolismo anaeróbico.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" style="color:#a78bfa;">2. Diagnóstico dos Distúrbios Ácido-Base</div>
+        <p>A regra de ouro: olhe para o pH, depois descubra quem "puxou" o pH para aquele lado (PaCO₂ ou HCO₃⁻).</p>
+        <ul>
+          <li><strong>Acidose Respiratória (Hipoventilação):</strong> pH &lt; 7,35 e PaCO₂ &gt; 45. O CO₂ acumulou. <em>Ajuste na VM: Aumentar o Volume Minuto (VT ou FR).</em></li>
+          <li><strong>Alcalose Respiratória (Hiperventilação):</strong> pH &gt; 7,45 e PaCO₂ &lt; 35. CO₂ "lavado" demais. <em>Ajuste na VM: Reduzir FR ou VT.</em></li>
+          <li><strong>Acidose Metabólica:</strong> pH &lt; 7,35 e HCO₃⁻ &lt; 22. Consumo de tampão. Requer cálculo de Anion Gap.</li>
+          <li><strong>Alcalose Metabólica:</strong> pH &gt; 7,45 e HCO₃⁻ &gt; 26. Geralmente iatrogênica (diuréticos) ou perdas gástricas (vômitos).</li>
+        </ul>
+        <div class="callout callout-warning">
+          <strong>Distúrbios Mistos:</strong> Ocorrem quando TANTO o CO₂ quanto o HCO₃⁻ puxam o pH para o mesmo sentido. Exemplo (Acidose Mista): Paciente em choque séptico (HCO₃⁻ 14) que entra em fadiga respiratória (PaCO₂ 55). O pH despenca violentamente (ex: 7,05).
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" style="color:#a78bfa;">3. Anion Gap (Hiato Aniônico)</div>
+        <p>Sempre calculado diante de uma <strong>Acidose Metabólica</strong> para descobrir a causa.</p>
+        <div class="formula-box">Fórmula: AG = Na⁺ - (Cl⁻ + HCO₃⁻)
+Valor Normal: 8 a 12 mEq/L</div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Acidose com AG Aumentado (&gt; 12)</th>
+                <th>Acidose com AG Normal (Hiperclorêmica)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ocorre por acúmulo de ácidos não mensurados.</td>
+                <td>Ocorre por perda de bicarbonato (o Cloro sobe para compensar).</td>
+              </tr>
+              <tr>
+                <td>• <strong>Cetoacidose</strong> (Diabética / Alcoólica)<br>• <strong>Acidose Lática</strong> (Choque, Sepse, Isquemia)<br>• <strong>Uremia</strong> (Falência Renal)<br>• Intoxicações (Salicilato, Metanol)</td>
+                <td>• Diarreia grave (perda intestinal)<br>• Fístulas biliares/pancreáticas<br>• Uso excessivo de Soro Fisiológico 0,9%<br>• Acidose Tubular Renal (ATR)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" style="color:#a78bfa;">4. Base Excess (BE) e Choque/Hemorragia na Emergência</div>
+        <p>O <strong>Base Excess (BE)</strong> mede a quantidade de base que precisaria ser adicionada ao sangue para normalizar o pH.</p>
+        <ul>
+          <li><strong>BE entre -2 e +2:</strong> Normal. Componente metabólico equilibrado.</li>
+          <li><strong>BE muito positivo (&gt; +2):</strong> Excesso de base (Alcalose metabólica).</li>
+          <li><strong>BE muito negativo (&lt; -2):</strong> "Déficit de Base" (Acidose metabólica). O corpo está consumindo tampão para neutralizar ácidos.</li>
+        </ul>
+        <div class="callout callout-danger">
+          <strong>A Regra de Ouro do Trauma (Dica de Emergência):</strong>
+          <br>No paciente vítima de trauma, um <strong>BE muito negativo (ex: -6, -10, -15)</strong> é um dos marcadores mais sensíveis e precoces de <strong>hipoperfusão tecidual e choque hemorrágico oculto</strong>. Antes mesmo da pressão arterial cair (devido à taquicardia compensatória), os tecidos mal perfundidos por falta de sangue iniciam metabolismo anaeróbio, gerando lactato, que consome o bicarbonato e afunda o BE. 
+          <br><br><em>Conduta prática:</em> Paciente traumatizado com BE muito negativo tem sangramento ativo até que se prove o contrário. Preparar protocolo de transfusão maciça e controle cirúrgico de danos!
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Bottom Navigation (Mobile) -->
   <nav class="bottom-nav">
-    <a href="#plantao" class="bottom-nav-item">
+    <a href="#plantao" class="bottom-nav-item" onclick="closeSidebarMobile()">
       <span class="icon">🚨</span>
       <span>Plantão</span>
     </a>
-    <a href="#calculadoras" class="bottom-nav-item">
+    <a href="#calculadoras" class="bottom-nav-item" onclick="closeSidebarMobile()">
       <span class="icon">🧮</span>
       <span>Cálculos</span>
     </a>
-    <a href="#mod1" class="bottom-nav-item active">
-      <span class="icon">📚</span>
-      <span>Manual</span>
+    <a href="#mod6" class="bottom-nav-item" onclick="closeSidebarMobile()" style="color:#a78bfa;">
+      <span class="icon">🩸</span>
+      <span>Gaso</span>
     </a>
-    <a href="#main-content" class="bottom-nav-item" onclick="window.scrollTo(0,0);">
+    <a href="#main-content" class="bottom-nav-item" onclick="window.scrollTo(0,0); closeSidebarMobile();">
       <span class="icon">🔝</span>
       <span>Topo</span>
     </a>
   </nav>
 
-  <!-- Scripts -->
+  <!-- ================= JAVASCRIPT ================= -->
   <script>
-// Navigation & UI Helpers
-document.addEventListener('DOMContentLoaded', () => {
-  setupScrollSpy();
-  setupDeltaPPChecklist();
-  setupSearch();
-});
+    // Controle do Menu Mobile
+    const sidebar = document.getElementById('sidebar');
 
-// Toggle mobile sidebar
-function toggleSidebar() {
-  const sidebar = document.getElementById('sidebar');
-  sidebar.classList.toggle('open');
-}
-
-// Close sidebar when clicking outside on mobile
-document.addEventListener('click', (e) => {
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.querySelector('.btn-mobile-toggle');
-  if (sidebar && sidebar.classList.contains('open')) {
-    if (!sidebar.contains(e.target) && (!toggleBtn || !toggleBtn.contains(e.target))) {
-      sidebar.classList.remove('open');
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
     }
-  }
-});
 
-// Scrollspy for sidebar links
-function setupScrollSpy() {
-  const sections = document.querySelectorAll('.module-section');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const bottomNavLinks = document.querySelectorAll('.bottom-nav-item');
-
-  window.addEventListener('scroll', () => {
-    let currentId = '';
-    const scrollPos = window.pageYOffset + 140;
-
-    sections.forEach(section => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      if (scrollPos >= top && scrollPos < top + height) {
-        currentId = section.getAttribute('id');
+    function closeSidebarMobile() {
+      if (window.innerWidth <= 900) {
+        sidebar.classList.remove('open');
       }
-    });
+    }
 
-    if (currentId) {
+    // Filtro de Busca
+    function filterContent() {
+      const query = document.getElementById('filterNav').value.toLowerCase();
+      const cards = document.querySelectorAll('.card, .calc-item');
+
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if (text.includes(query) || query === '') {
+          card.style.display = 'flex'; 
+          if(card.classList.contains('card')) card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Scroll Highlights no Menu
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('.module-section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      let currentId = '';
+
+      sections.forEach(section => {
+        const top = section.offsetTop - 150;
+        if (window.pageYOffset >= top) {
+          currentId = section.getAttribute('id');
+        }
+      });
+
       navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === `#${currentId}`) {
           link.classList.add('active');
         }
       });
-
-      bottomNavLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${currentId}`) {
-          link.classList.add('active');
-        }
-      });
-    }
-  });
-}
-
-// Global Search Filter
-function setupSearch() {
-  const searchInput = document.getElementById('filterNav');
-  if (!searchInput) return;
-
-  searchInput.addEventListener('input', () => {
-    filterContent();
-  });
-}
-
-function filterContent() {
-  const query = document.getElementById('filterNav').value.toLowerCase().trim();
-  const cards = document.querySelectorAll('.card, .calc-item');
-  const sections = document.querySelectorAll('.module-section');
-
-  cards.forEach(card => {
-    const text = card.innerText.toLowerCase();
-    if (query === '' || text.includes(query)) {
-      card.style.display = '';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-
-  // Ensure sections show up if any of their cards are visible
-  sections.forEach(sec => {
-    if (query === '') {
-      sec.style.display = '';
-      return;
-    }
-    const visibleCards = sec.querySelectorAll('.card:not([style*="display: none"]), .calc-item:not([style*="display: none"])');
-    if (visibleCards.length > 0 || sec.querySelector('.section-title').innerText.toLowerCase().includes(query)) {
-      sec.style.display = '';
-    } else {
-      sec.style.display = 'none';
-    }
-  });
-}
-
-function clearSearch() {
-  const input = document.getElementById('filterNav');
-  if (input) {
-    input.value = '';
-    filterContent();
-  }
-}
-
-// ================= CALCULADORAS CLÍNICAS =================
-
-// 1. PBW e Volumes Protetores
-function calcPBW() {
-  const sex = document.querySelector('input[name="pbw-sex"]:checked').value;
-  const height = parseFloat(document.getElementById('pbw-height').value);
-  const res = document.getElementById('pbw-result');
-
-  if (!height || height < 100 || height > 240) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Insira uma altura válida entre 100 e 240 cm.';
-    return;
-  }
-
-  const diff = height - 152.4;
-  const pbw = sex === 'male' ? (50 + 0.91 * diff) : (45.5 + 0.91 * diff);
-
-  const vt4 = Math.round(pbw * 4);
-  const vt5 = Math.round(pbw * 5);
-  const vt6 = Math.round(pbw * 6);
-  const vt7 = Math.round(pbw * 7);
-  const vt8 = Math.round(pbw * 8);
-
-  res.style.display = 'block';
-  res.className = 'result-badge success';
-  res.innerHTML = `
-    <div style="font-size: 1.05rem; font-weight:700; margin-bottom: 0.5rem; color:#38bdf8;">
-      ⚖️ Peso Predito (PBW): ${pbw.toFixed(1)} kg (${sex === 'male' ? 'Masculino' : 'Feminino'})
-    </div>
-    <div style="font-size: 0.88rem; line-height: 1.6;">
-      • <strong>4 mL/kg:</strong> <strong>${vt4} mL</strong> <span style="color:#94a3b8;">(SARA grave / Hipercapnia permissiva)</span><br>
-      • <strong>5 mL/kg:</strong> <strong>${vt5} mL</strong> <span style="color:#94a3b8;">(SARA moderada)</span><br>
-      • <strong>6 mL/kg:</strong> <strong>${vt6} mL</strong> <span style="color:#86efac; font-weight:bold;">★ Meta Protetora Ouro</span><br>
-      • <strong>7 mL/kg:</strong> <strong>${vt7} mL</strong> <span style="color:#94a3b8;">(Transição)</span><br>
-      • <strong>8 mL/kg:</strong> <strong>${vt8} mL</strong> <span style="color:#fcd34d;">(Teto máximo protetor / Não lesado)</span>
-    </div>
-  `;
-}
-
-// 2. Mecânica Ventilatória Completa (All-in-One)
-function calcMechanicsAll() {
-  const vt = parseFloat(document.getElementById('all-vt').value);
-  const ppico = parseFloat(document.getElementById('all-ppico').value);
-  const pplat = parseFloat(document.getElementById('all-pplat').value);
-  const peep = parseFloat(document.getElementById('all-peep').value);
-  const flowMin = parseFloat(document.getElementById('all-flow').value);
-  const res = document.getElementById('all-mech-result');
-
-  if (isNaN(vt) || isNaN(ppico) || isNaN(pplat) || isNaN(peep) || isNaN(flowMin) || flowMin <= 0) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Preencha todos os parâmetros com valores numéricos válidos.';
-    return;
-  }
-
-  if (pplat > ppico) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Erro fisiológico: A Pressão de Platô (Pplat) não pode ser superior à Pressão de Pico (Ppico).';
-    return;
-  }
-
-  if (peep >= pplat) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Erro fisiológico: A PEEP total não pode ser igual ou maior que a Pressão de Platô.';
-    return;
-  }
-
-  const dp = pplat - peep;
-  const cest = vt / dp;
-  const flowSec = flowMin / 60; // Converte L/min para L/s
-  const rva = (ppico - pplat) / flowSec;
-  const pres = ppico - pplat;
-
-  let warnings = [];
-  if (dp > 14) warnings.push('⚠️ <strong>Driving Pressure > 14 cmH₂O:</strong> Risco aumentado de VILI (estresse de cisalhamento alveolar). Avalie reduzir VT.');
-  if (pplat > 30) warnings.push('⚠️ <strong>Pressão de Platô > 30 cmH₂O:</strong> Limite de segurança ultrapassado (barotrauma/volutrauma).');
-  if (cest < 30) warnings.push('⚠️ <strong>Complacência Estática < 30 mL/cmH₂O:</strong> Pulmão extremamente rígido / SARA moderada a grave.');
-  if (rva > 12) warnings.push('⚠️ <strong>Resistência > 12 cmH₂O/L/s:</strong> Componente resistivo aumentado (broncoespasmo, secreção ou tubo fino/dobrado).');
-
-  let warningBox = '';
-  if (warnings.length > 0) {
-    warningBox = `
-      <div style="margin-top: 0.75rem; padding: 0.65rem; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 6px; font-size: 0.85rem; color: #fca5a5;">
-        ${warnings.join('<br>')}
-      </div>
-    `;
-  }
-
-  res.style.display = 'block';
-  res.className = warnings.length === 0 ? 'result-badge success' : 'result-badge warning';
-  res.innerHTML = `
-    <div style="font-size: 1rem; font-weight:700; margin-bottom: 0.5rem; color:#38bdf8;">
-      📊 Resultado da Mecânica Estática:
-    </div>
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
-      <div>• <strong>Driving Pressure (ΔP):</strong> <span style="font-weight:700; color:${dp <= 14 ? '#86efac' : '#fca5a5'}">${dp.toFixed(1)} cmH₂O</span></div>
-      <div>• <strong>Complacência (Cest):</strong> <span style="font-weight:700; color:${cest >= 50 ? '#86efac' : (cest >= 30 ? '#fcd34d' : '#fca5a5')}">${cest.toFixed(1)} mL/cmH₂O</span></div>
-      <div>• <strong>Resistência (Rva):</strong> <span style="font-weight:700; color:${rva <= 12 ? '#86efac' : '#fca5a5'}">${rva.toFixed(1)} cmH₂O·s/L</span></div>
-      <div>• <strong>Pressão Resistiva (Pres):</strong> ${pres.toFixed(1)} cmH₂O</div>
-    </div>
-    ${warningBox}
-  `;
-}
-
-// 3. Driving Pressure Isolada
-function calcDrivingPressure() {
-  const pplat = parseFloat(document.getElementById('dp-pplat').value);
-  const peeptot = parseFloat(document.getElementById('dp-peeptot').value);
-  const res = document.getElementById('dp-result');
-
-  if (isNaN(pplat) || isNaN(peeptot)) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Preencha os campos numéricos.';
-    return;
-  }
-
-  const dp = pplat - peeptot;
-  res.style.display = 'block';
-
-  if (dp <= 14) {
-    res.className = 'result-badge success';
-    res.innerHTML = `<strong>Driving Pressure: ${dp.toFixed(1)} cmH₂O</strong><br>Status: <strong>PROTETORA (≤ 14 cmH₂O)</strong>`;
-  } else {
-    res.className = 'result-badge danger';
-    res.innerHTML = `<strong>Driving Pressure: ${dp.toFixed(1)} cmH₂O</strong><br>Status: <strong>ELEVADA / ALTO RISCO DE VILI (> 14 cmH₂O)</strong><br><small>Conduta: Considere reduzir o volume corrente ou titular PEEP.</small>`;
-  }
-}
-
-// 4. Complacência Estática Isolada
-function calcCest() {
-  const vt = parseFloat(document.getElementById('cest-vt').value);
-  const dp = parseFloat(document.getElementById('cest-dp').value);
-  const res = document.getElementById('cest-result');
-
-  if (!vt || !dp || dp <= 0) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Preencha valores válidos com Driving Pressure maior que zero.';
-    return;
-  }
-
-  const cest = vt / dp;
-  res.style.display = 'block';
-
-  if (cest >= 50) {
-    res.className = 'result-badge success';
-    res.innerHTML = `<strong>Cest: ${cest.toFixed(1)} mL/cmH₂O</strong><br>Classificação: <strong>NORMAL PARA INTUBADO (≥ 50 mL/cmH₂O)</strong>`;
-  } else if (cest >= 30) {
-    res.className = 'result-badge warning';
-    res.innerHTML = `<strong>Cest: ${cest.toFixed(1)} mL/cmH₂O</strong><br>Classificação: <strong>COMPROMETIMENTO MODERADO (30 a 50 mL/cmH₂O)</strong>`;
-  } else {
-    res.className = 'result-badge danger';
-    res.innerHTML = `<strong>Cest: ${cest.toFixed(1)} mL/cmH₂O</strong><br>Classificação: <strong>PULMÃO RÍGIDO / SARA GRAVE (< 30 mL/cmH₂O)</strong>`;
-  }
-}
-
-// 5. Resistência Isolada
-function calcRva() {
-  const ppico = parseFloat(document.getElementById('rva-ppico').value);
-  const pplat = parseFloat(document.getElementById('rva-pplat').value);
-  const flowMin = parseFloat(document.getElementById('rva-flow').value);
-  const res = document.getElementById('rva-result');
-
-  if (isNaN(ppico) || isNaN(pplat) || !flowMin || flowMin <= 0) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Preencha valores válidos.';
-    return;
-  }
-
-  const flowSec = flowMin / 60;
-  const rva = (ppico - pplat) / flowSec;
-  res.style.display = 'block';
-
-  if (rva <= 12) {
-    res.className = 'result-badge success';
-    res.innerHTML = `<strong>Rva: ${rva.toFixed(1)} cmH₂O·s/L</strong><br>Status: <strong>NORMAL EM INTUBADO (≤ 12)</strong>`;
-  } else {
-    res.className = 'result-badge danger';
-    res.innerHTML = `<strong>Rva: ${rva.toFixed(1)} cmH₂O·s/L</strong><br>Status: <strong>AUMENTADA (> 12)</strong><br><small>Investigar broncoespasmo, secreção retida no tubo ou circuito acotovelado.</small>`;
-  }
-}
-
-// 6. Delta PP Numérico
-function calcDPP() {
-  const max = parseFloat(document.getElementById('dpp-max').value);
-  const min = parseFloat(document.getElementById('dpp-min').value);
-  const res = document.getElementById('dpp-result');
-
-  if (!max || !min || (max + min) === 0) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Preencha pressões de pulso válidas.';
-    return;
-  }
-
-  const mean = (max + min) / 2;
-  const dpp = ((max - min) / mean) * 100;
-  res.style.display = 'block';
-
-  if (dpp > 13) {
-    res.className = 'result-badge success';
-    res.innerHTML = `
-      <strong>ΔPP: ${dpp.toFixed(1)}%</strong><br>
-      Interpretação: <strong>PROVÁVEL FLUIDO-RESPONSIVO (> 13%)</strong><br>
-      <small>⚠️ Lembre-se de validar se o paciente cumpre TODOS os 7 critérios do checklist abaixo antes de prescrever expansão volêmica.</small>
-    `;
-  } else {
-    res.className = 'result-badge warning';
-    res.innerHTML = `
-      <strong>ΔPP: ${dpp.toFixed(1)}%</strong><br>
-      Interpretação: <strong>NÃO RESPONSIVO A VOLUME (≤ 13%)</strong><br>
-      <small>Expansão volêmica pode não gerar ganho de débito e precipitar congestão pulmonar.</small>
-    `;
-  }
-}
-
-// 7. Checklist dos 7 Critérios do Delta PP
-function setupDeltaPPChecklist() {
-  const checkboxes = document.querySelectorAll('.deltapp-check');
-  const banner = document.getElementById('deltapp-validation-banner');
-  if (!checkboxes.length || !banner) return;
-
-  function updateChecklist() {
-    let checkedCount = 0;
-    checkboxes.forEach(cb => {
-      if (cb.checked) checkedCount++;
     });
 
-    banner.classList.remove('hidden');
-    if (checkedCount === checkboxes.length) {
-      banner.className = 'validation-banner valid';
-      banner.innerHTML = '✅ <strong>MEDIDA DE ΔPP 100% VÁLIDA:</strong> Todos os 7 critérios obrigatórios estão atendidos. O valor do ΔPP pode orientar prova volêmica.';
-    } else {
-      banner.className = 'validation-banner invalid';
-      banner.innerHTML = `❌ <strong>MEDIDA DE ΔPP INVÁLIDA (${checkedCount}/7 critérios atendidos):</strong> O valor do ΔPP não é confiável para predizer resposta volêmica. Risco de falsos positivos/negativos.`;
+    // Calculadoras
+    function calcPBW() {
+      const sexInput = document.querySelector('input[name="pbw-sex"]:checked');
+      const height = parseFloat(document.getElementById('pbw-height').value);
+      const res = document.getElementById('pbw-result');
+
+      if (!height || height < 120) {
+        alert('Insira uma altura válida em centímetros.');
+        return;
+      }
+
+      const diff = height - 152.4;
+      const pbw = sexInput.value === 'male' ? (50 + 0.91 * diff) : (45.5 + 0.91 * diff);
+      const vt4 = Math.round(pbw * 4);
+      const vt6 = Math.round(pbw * 6);
+      const vt8 = Math.round(pbw * 8);
+
+      res.style.display = 'block';
+      res.className = 'result-badge success';
+      res.innerHTML = `
+        <strong>Peso Predito:</strong> ${pbw.toFixed(1)} kg<br>
+        • Protetor SARA (4 mL/kg): <strong>${vt4} mL</strong><br>
+        • Protetor SARA (6 mL/kg): <strong>${vt6} mL</strong><br>
+        • Convencional (8 mL/kg): <strong>${vt8} mL</strong>
+      `;
     }
-  }
 
-  checkboxes.forEach(cb => {
-    cb.addEventListener('change', updateChecklist);
-  });
-}
+    function calcMechanicsAll() {
+      const vt = parseFloat(document.getElementById('all-vt').value);
+      const ppico = parseFloat(document.getElementById('all-ppico').value);
+      const pplat = parseFloat(document.getElementById('all-pplat').value);
+      const peeptot = parseFloat(document.getElementById('all-peep').value);
+      const flow = parseFloat(document.getElementById('all-flow').value);
+      const res = document.getElementById('all-mech-result');
 
-// 8. Calculadora de Tempo de Ciclo e Relação I:E
-function calcCycleTime() {
-  const fr = parseFloat(document.getElementById('cycle-fr').value);
-  const tinsp = parseFloat(document.getElementById('cycle-tinsp').value);
-  const res = document.getElementById('cycle-result');
+      if (isNaN(vt) || isNaN(ppico) || isNaN(pplat) || isNaN(peeptot) || isNaN(flow)) {
+        alert("Preencha todos os campos para a análise completa.");
+        return;
+      }
 
-  if (!fr || fr <= 0 || !tinsp || tinsp <= 0) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = '⚠️ Insira uma FR e um Tempo Inspiratório válidos.';
-    return;
-  }
+      const dp = pplat - peeptot;
+      const pres = ppico - pplat;
+      const cest = vt / dp;
+      const rva = pres / (flow / 60);
 
-  const tCiclo = 60 / fr;
+      res.style.display = 'block';
+      res.className = 'result-badge';
+      res.style.backgroundColor = '#1e293b';
+      res.style.color = '#f8fafc';
 
-  if (tinsp >= tCiclo) {
-    res.style.display = 'block';
-    res.className = 'result-badge danger';
-    res.innerHTML = `⚠️ Tempo Inspiratório (${tinsp}s) deve ser menor que o Tempo Total do Ciclo (${tCiclo.toFixed(2)}s).`;
-    return;
-  }
+      let html = `<div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem; text-align:left;">`;
+      
+      // DP
+      html += `<div><strong>ΔP:</strong> ${dp.toFixed(1)} cmH₂O<br>`;
+      html += dp <= 14 ? `<span style="color:#86efac;">✅ Protetora</span></div>` : `<span style="color:#fca5a5;">🚨 Risco VILI</span></div>`;
+      
+      // Cest
+      html += `<div><strong>Cest:</strong> ${cest.toFixed(1)} mL/cmH₂O<br>`;
+      html += cest >= 50 ? `<span style="color:#86efac;">✅ Normal</span></div>` : `<span style="color:#fcd34d;">⚠️ Rígido/SARA</span></div>`;
+      
+      // Pres
+      html += `<div><strong>Pres:</strong> ${pres.toFixed(1)} cmH₂O<br>`;
+      html += pres <= 4 ? `<span style="color:#86efac;">✅ Normal</span></div>` : `<span style="color:#fca5a5;">🚨 Aumentada</span></div>`;
+      
+      // Rva
+      html += `<div><strong>Rva:</strong> ${rva.toFixed(1)} cmH₂O/L/s<br>`;
+      html += rva <= 12 ? `<span style="color:#86efac;">✅ Normal</span></div>` : `<span style="color:#fca5a5;">🚨 Obstrução</span></div>`;
 
-  const tExp = tCiclo - tinsp;
-  const ratioE = tExp / tinsp;
+      html += `</div>`;
+      res.innerHTML = html;
+    }
 
-  res.style.display = 'block';
-  res.className = 'result-badge success';
-  res.innerHTML = `
-    <strong>Tempo do Ciclo Total:</strong> ${tCiclo.toFixed(2)} segundos<br>
-    <strong>Tempo Expiratório (Texp):</strong> ${tExp.toFixed(2)} segundos<br>
-    <strong>Relação I:E Resultante:</strong> 1 : ${ratioE.toFixed(1)}
-  `;
-}
+    function calcDrivingPressure() {
+      const pplat = parseFloat(document.getElementById('dp-pplat').value);
+      const peeptot = parseFloat(document.getElementById('dp-peeptot').value);
+      const res = document.getElementById('dp-result');
+
+      if (isNaN(pplat) || isNaN(peeptot)) return;
+
+      const dp = pplat - peeptot;
+      res.style.display = 'block';
+
+      if (dp <= 14) {
+        res.className = 'result-badge success';
+        res.innerHTML = `ΔP: <strong>${dp.toFixed(1)} cmH₂O</strong><br>Status: PROTETORA (≤ 14)`;
+      } else {
+        res.className = 'result-badge danger';
+        res.innerHTML = `ΔP: <strong>${dp.toFixed(1)} cmH₂O</strong><br>Status: RISCO VILI (&gt; 14)`;
+      }
+    }
+
+    function calcCest() {
+      const vt = parseFloat(document.getElementById('cest-vt').value);
+      const dp = parseFloat(document.getElementById('cest-dp').value);
+      const res = document.getElementById('cest-result');
+
+      if (!vt || !dp || dp <= 0) return;
+
+      const cest = vt / dp;
+      res.style.display = 'block';
+
+      if (cest >= 50) {
+        res.className = 'result-badge success';
+        res.innerHTML = `Cest: <strong>${cest.toFixed(1)} mL/cmH₂O</strong> (Normal)`;
+      } else if (cest >= 30) {
+        res.className = 'result-badge warning';
+        res.innerHTML = `Cest: <strong>${cest.toFixed(1)} mL/cmH₂O</strong> (Moderada)`;
+      } else {
+        res.className = 'result-badge danger';
+        res.innerHTML = `Cest: <strong>${cest.toFixed(1)} mL/cmH₂O</strong> (SARA/Rígido)`;
+      }
+    }
+
+    function calcRva() {
+      const ppico = parseFloat(document.getElementById('rva-ppico').value);
+      const pplat = parseFloat(document.getElementById('rva-pplat').value);
+      const flow = parseFloat(document.getElementById('rva-flow').value);
+      const res = document.getElementById('rva-result');
+
+      if (isNaN(ppico) || isNaN(pplat) || isNaN(flow) || flow <= 0) return;
+
+      const rva = (ppico - pplat) / (flow / 60);
+      res.style.display = 'block';
+
+      if (rva <= 12) {
+        res.className = 'result-badge success';
+        res.innerHTML = `Rva: <strong>${rva.toFixed(1)} cmH₂O/L/s</strong> (Normal)`;
+      } else {
+        res.className = 'result-badge danger';
+        res.innerHTML = `Rva: <strong>${rva.toFixed(1)} cmH₂O/L/s</strong> (Aumentada)`;
+      }
+    }
+
+    function calcDPP() {
+      const max = parseFloat(document.getElementById('dpp-max').value);
+      const min = parseFloat(document.getElementById('dpp-min').value);
+      const res = document.getElementById('dpp-result');
+
+      if (isNaN(max) || isNaN(min)) return;
+
+      const dpp = ((max - min) / ((max + min) / 2)) * 100;
+      res.style.display = 'block';
+
+      if (dpp > 13) {
+        res.className = 'result-badge success';
+        res.innerHTML = `ΔPP: <strong>${dpp.toFixed(1)}%</strong><br>FLUIDO-RESPONSIVO (&gt; 13%)`;
+      } else {
+        res.className = 'result-badge warning';
+        res.innerHTML = `ΔPP: <strong>${dpp.toFixed(1)}%</strong><br>NÃO RESPONSIVO (≤ 13%)`;
+      }
+    }
+
+    function calcAnionGap() {
+      const na = parseFloat(document.getElementById('ag-na').value);
+      const cl = parseFloat(document.getElementById('ag-cl').value);
+      const hco3 = parseFloat(document.getElementById('ag-hco3').value);
+      const res = document.getElementById('ag-result');
+
+      if (isNaN(na) || isNaN(cl) || isNaN(hco3)) {
+        alert("Preencha todos os íons para calcular o Anion Gap.");
+        return;
+      }
+
+      const ag = na - (cl + hco3);
+      res.style.display = 'block';
+
+      if (ag > 12) {
+        res.className = 'result-badge danger';
+        res.innerHTML = `Anion Gap: <strong>${ag.toFixed(1)} mEq/L</strong><br>Status: <strong>AUMENTADO</strong> (Acúmulo de Ácidos). Checar lactato, cetonas, uremia.`;
+      } else {
+        res.className = 'result-badge success';
+        res.innerHTML = `Anion Gap: <strong>${ag.toFixed(1)} mEq/L</strong><br>Status: <strong>NORMAL</strong> (Acidose Hiperclorêmica). Suspeitar de perda digestiva/renal de HCO₃⁻ ou SF 0,9%.`;
+      }
+    }
+
+    // Validador Checkboxes Delta PP
+    const checkboxes = document.querySelectorAll('.deltapp-check');
+    const validationBanner = document.getElementById('deltapp-validation-banner');
+
+    function checkValidation() {
+      const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+      validationBanner.style.display = 'block';
+      if (allChecked) {
+        validationBanner.className = 'validation-banner valid';
+        validationBanner.innerHTML = '✅ Todos os critérios preenchidos. O valor do ΔPP é confiável!';
+      } else {
+        validationBanner.className = 'validation-banner invalid';
+        validationBanner.innerHTML = '🚨 Critérios pendentes! O valor do ΔPP pode ser falso-negativo/positivo.';
+      }
+    }
+
+    checkboxes.forEach(cb => cb.addEventListener('change', checkValidation));
+
   </script>
 </body>
 </html>
